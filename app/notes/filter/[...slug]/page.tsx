@@ -1,10 +1,12 @@
+import type { Metadata } from "next";
 import {
   QueryClient,
   HydrationBoundary,
   dehydrate,
 } from "@tanstack/react-query";
 
-import { fetchNotes } from "@/lib/api";
+import { fetchNotes } from "@/lib/api/notes";
+import { openGraphImage } from "@/lib/metadata";
 import type { NoteTag } from "@/types/note";
 import NotesClient from "./Notes.client";
 
@@ -15,6 +17,29 @@ interface NotesPageProps {
 }
 
 const tags: NoteTag[] = ["Todo", "Work", "Personal", "Meeting", "Shopping"];
+
+export async function generateMetadata({
+  params,
+}: NotesPageProps): Promise<Metadata> {
+  const { slug } = await params;
+  const filter = tags.includes(slug[0] as NoteTag) ? slug[0] : "All";
+  const title = `${filter} notes | NoteHub`;
+  const description =
+    filter === "All"
+      ? "Browse, search, and manage all your notes in NoteHub."
+      : `Browse, search, and manage your ${filter} notes in NoteHub.`;
+
+  return {
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+      url: `/notes/filter/${slug.map(encodeURIComponent).join("/")}`,
+      images: [openGraphImage],
+    },
+  };
+}
 
 export default async function NotesPage({ params }: NotesPageProps) {
   const { slug } = await params;

@@ -2,15 +2,11 @@
   box-sizing: border-box;
 }
 
-html,
 body {
+  font-family: var(--font-roboto), sans-serif;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
   margin: 0;
-  padding: 0;
-  min-height: 100%;
-}
-
-body {
-  font-family: Arial, Helvetica, sans-serif;
   background-color: #f8f9fa;
-  color: #171717;
 }
