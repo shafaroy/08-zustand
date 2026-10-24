@@ -8,7 +8,7 @@ import {
   dehydrate,
 } from "@tanstack/react-query";
 
-import { fetchNoteById } from "@/lib/api/notes";
+import { fetchNoteById } from "@/lib/api";
 import { openGraphImage } from "@/lib/metadata";
 import NoteDetailsClient from "./NoteDetails.client";
 
