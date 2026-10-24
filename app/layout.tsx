@@ -1,15 +1,33 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
+import { Roboto } from "next/font/google";
 
 import Header from "@/components/Header/Header";
 import Footer from "@/components/Footer/Footer";
 import TanStackProvider from "@/components/TanStackProvider/TanStackProvider";
+import { openGraphImage, siteUrl } from "@/lib/metadata";
 
 import "./globals.css";
 
+const roboto = Roboto({
+  weight: ["400", "500", "700"],
+  variable: "--font-roboto",
+  display: "swap",
+  subsets: ["latin", "latin-ext"],
+});
+
 export const metadata: Metadata = {
+  metadataBase: new URL(siteUrl),
   title: "NoteHub",
-  description: "Personal notes application",
+  description:
+    "Create, search, and organize your personal notes with NoteHub. Keep your ideas, tasks, and plans in one place.",
+  openGraph: {
+    title: "NoteHub",
+    description:
+      "Create, search, and organize your personal notes with NoteHub. Keep your ideas, tasks, and plans in one place.",
+    url: "/",
+    images: [openGraphImage],
+  },
 };
 
 interface RootLayoutProps {
@@ -23,7 +41,7 @@ export default function RootLayout({
 }: Readonly<RootLayoutProps>) {
   return (
     <html lang="en">
-      <body>
+      <body className={`${roboto.variable} ${roboto.className}`}>
         <TanStackProvider>
           <Header />
           {children}

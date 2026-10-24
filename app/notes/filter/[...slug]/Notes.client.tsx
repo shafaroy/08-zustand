@@ -1,17 +1,16 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { useQuery, keepPreviousData } from "@tanstack/react-query";
 import { useDebouncedCallback } from "use-debounce";
 
-import { fetchNotes } from "@/lib/api";
+import { fetchNotes } from "@/lib/api/notes";
 import type { NoteTag } from "@/types/note";
 
 import NoteList from "@/components/NoteList/NoteList";
 import SearchBox from "@/components/SearchBox/SearchBox";
 import Pagination from "@/components/Pagination/Pagination";
-import NoteForm from "@/components/NoteForm/NoteForm";
-import Modal from "@/components/Modal/Modal";
 
 import css from "./NotesPage.module.css";
 
@@ -25,7 +24,6 @@ export default function NotesClient({ tag }: NotesClientProps) {
   const [inputValue, setInputValue] = useState("");
   const [search, setSearch] = useState("");
   const [page, setPage] = useState(1);
-  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const debouncedSearch = useDebouncedCallback((value: string) => {
     setSearch(value);
@@ -50,14 +48,8 @@ export default function NotesClient({ tag }: NotesClientProps) {
     debouncedSearch(value);
   };
 
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
-  };
-
   return (
-    <main className={css.app}>
-      <h1>My Notes</h1>
-
+    <main className={css.app} aria-label="Notes">
       <div className={css.toolbar}>
         <SearchBox value={inputValue} onChange={handleSearch} />
 
@@ -69,13 +61,9 @@ export default function NotesClient({ tag }: NotesClientProps) {
           />
         )}
 
-        <button
-          type="button"
-          className={css.button}
-          onClick={() => setIsModalOpen(true)}
-        >
+        <Link href="/notes/action/create" className={css.button}>
           Create note +
-        </button>
+        </Link>
       </div>
 
       {isPending && <p>Loading, please wait...</p>}
@@ -83,12 +71,6 @@ export default function NotesClient({ tag }: NotesClientProps) {
       {isError && <p>Something went wrong.</p>}
 
       {data && !isPending && !isError && <NoteList notes={data.notes} />}
-
-      {isModalOpen && (
-        <Modal onClose={handleCloseModal}>
-          <NoteForm onCancel={handleCloseModal} />
-        </Modal>
-      )}
     </main>
   );
 }
