@@ -9,7 +9,7 @@ import {
 } from "@tanstack/react-query";
 
 import { fetchNoteById } from "@/lib/api";
-import { openGraphImage } from "@/lib/metadata";
+import { openGraphImage, siteUrl } from "@/lib/metadata";
 import NoteDetailsClient from "./NoteDetails.client";
 
 interface NoteDetailsPageProps {
@@ -43,7 +43,7 @@ export async function generateMetadata({
     openGraph: {
       title,
       description,
-      url: `/notes/${encodeURIComponent(id)}`,
+      url: new URL(`/notes/${encodeURIComponent(id)}`, siteUrl).toString(),
       images: [openGraphImage],
     },
   };

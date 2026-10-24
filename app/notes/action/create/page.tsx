@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import NoteForm from "@/components/NoteForm/NoteForm";
-import { openGraphImage } from "@/lib/metadata";
+import { openGraphImage, siteUrl } from "@/lib/metadata";
 import css from "./CreateNote.module.css";
 
 export const metadata: Metadata = {
@@ -11,7 +11,7 @@ export const metadata: Metadata = {
     title: "Create note | NoteHub",
     description:
       "Create a new note in NoteHub. Your draft is saved automatically so you can finish it later.",
-    url: "/notes/action/create",
+    url: new URL("/notes/action/create", siteUrl).toString(),
     images: [openGraphImage],
   },
 };
