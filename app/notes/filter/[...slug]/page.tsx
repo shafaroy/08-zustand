@@ -6,7 +6,7 @@ import {
 } from "@tanstack/react-query";
 
 import { fetchNotes } from "@/lib/api";
-import { openGraphImage } from "@/lib/metadata";
+import { openGraphImage, siteUrl } from "@/lib/metadata";
 import type { NoteTag } from "@/types/note";
 import NotesClient from "./Notes.client";
 
@@ -35,7 +35,10 @@ export async function generateMetadata({
     openGraph: {
       title,
       description,
-      url: `/notes/filter/${slug.map(encodeURIComponent).join("/")}`,
+      url: new URL(
+        `/notes/filter/${slug.map(encodeURIComponent).join("/")}`,
+        siteUrl,
+      ).toString(),
       images: [openGraphImage],
     },
   };

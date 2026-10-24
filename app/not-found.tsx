@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { openGraphImage } from "@/lib/metadata";
+import { openGraphImage, siteUrl } from "@/lib/metadata";
 import css from "./NotFound.module.css";
 
 export const metadata: Metadata = {
@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "404 - Page not found | NoteHub",
     description: "Sorry, the page you are looking for does not exist.",
-    url: "/",
+    url: new URL("/", siteUrl).toString(),
     images: [openGraphImage],
   },
 };

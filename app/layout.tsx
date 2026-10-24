@@ -25,7 +25,7 @@ export const metadata: Metadata = {
     title: "NoteHub",
     description:
       "Create, search, and organize your personal notes with NoteHub. Keep your ideas, tasks, and plans in one place.",
-    url: "/",
+    url: new URL("/", siteUrl).toString(),
     images: [openGraphImage],
   },
 };
